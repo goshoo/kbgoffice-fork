@@ -1,0 +1,6 @@
+/*
+ To see this (file) in action:
+./kbgoffice -stylesheet kbgoffice.css
+*/
+
+QLineEdit { background-color: rgb(255, 255, 0) }

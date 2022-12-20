@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/bg_en_flag.png</file>
+        <file>images/bg_flag.png</file>
+        <file>images/kbgoffice_about.png</file>
+        <file>images/kbgoffice_icon_mini.png</file>
+        <file>images/kbgoffice_icon.png</file>
+        <file>images/kbgoffice_splash.png</file>
+        <file>icons/exit.png</file>
+        <file>icons/configure.png</file>
+        <file>icons/klipper.png</file>
+    </qresource>
+</RCC>

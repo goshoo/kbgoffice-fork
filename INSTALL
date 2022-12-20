@@ -1,0 +1,89 @@
+           KBG Office Assistant Installation
+
+
+For version 2.0 using Qt4 and up:
+
+   For installation go to the directory where you unzipped
+distribution package or checked out from svn. Directory that
+contains this INSTALL file, that you read at the moment.
+
+   Type the following commands. Note that for the last
+command you may need to be (su) root/adminstrator.
+
+On linux:
+   cd src
+   qmake-qt4 -config release
+   make clean
+   make install
+
+Some distributions have their ways of using qmake e.g.:
+   qmake -qt4 -config -release
+It is OK if it doesn't complain: "***Unknown option -qt4"
+Alternatively you could use full path when obviously qt4:
+   /usr/lib64/qt4/bin/qmake -config -release
+
+On windows: Use Programs:Qt SDK...:Qt Command Prompt
+   cd src
+   qmake -config release
+   mingw32-make clean
+   mingw32-make install
+
+   NB! Target install depends on default so no need for
+'make' before 'make install'
+
+   If you wish to change default paths etc. please edit
+kbgoffice.pro in advance (user editable part only).
+
+   After that please continue with 'install dictionaries'
+section at end of this document or if you wish to do it in
+one step please extract dictionaries in src/data 
+before doing 'make install' step
+
+   Latest qt-sdk Linux and Windows versions are
+available for donwload at http://qt.nokia.com/downloads
+If you're using linux please install thru Package Manager.
+
+For previous versions:
+
+   For installation go to the directory where you unzipped
+distribution package. Directory that contains this INSTALL
+file, that you read at the moment.
+
+   Type the following commands. Note that for the last
+command you must be root (su).
+
+   cd src
+   ./configure
+   make
+   make install
+
+   If you have KDE 3 and want KBG Office Assistant to
+look and work as KDE 3 application use command.
+
+   ./configure --with-kde
+
+   If you have some problems with configuration script
+type and look at:
+
+   ./configure --help
+
+   Usualy you may have problems with Qt path. You can
+use this variables to set the path to your Qt:
+
+   ./configure --with-qt-libraries=/path/to/qt/lib
+--with-qt-includes=/path/to/qt/include
+--with-qt-moc=/path/to/qt/bin/moc
+
+   Replase the /path/to/ with real path to your Qt.
+
+   After that you need to install dictionaries. To download
+dictionaries visit http://bgoffice.sourceforge.net/.
+After that unzip dictionaries and enter in directory where
+you unzipped them. Then type the following command. Note
+that you must be root (su).
+
+   make install
+
+   After that run X (if you are not running) and in one
+X terminal window type the name of the program "kbgoffice".
+So in theory everything must be OK.

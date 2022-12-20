@@ -1,0 +1,16 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=KBGOffice
+Name[bg]=КБГОфис
+Comment=BG Office Assistant
+Comment[bg]=БГ Офис помощник
+TryExec=kbgoffice
+Exec=kbgoffice %F
+Icon=/usr/local/share/bgoffice/kbgoffice_icon.png
+Encoding=UTF-8
+GenericName=BG Office Assistant
+GenericName[bg]=БГ Офис помощник
+Categories=Office;KDE;Qt;Utility;Dictionary;
+Terminal=false
