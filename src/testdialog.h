@@ -1,7 +1,7 @@
 #ifndef TESTDIALOG_H
 #define TESTDIALOG_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 #include <QSettings>
 
 #include "translator_manager.h"

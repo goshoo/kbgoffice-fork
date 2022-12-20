@@ -1,5 +1,5 @@
 #include <QObject>
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 #include <QSessionManager>
 
 class Application : public QApplication

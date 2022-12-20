@@ -1,13 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <QtWidgets/QMainWindow>
 
 #include <QClipboard>
-#include <QHttp>
-#include <QListWidget>
+#include <QtWidgets/QListWidget>
 #include <QSettings>
-#include <QSystemTrayIcon>
+#include <QtWidgets/QSystemTrayIcon>
 #include <QTranslator>
 #include <QUrl>
 
@@ -123,7 +122,6 @@ private:
     bool useSplashScreen;
     bool dataOk;
     TRANSLATIONS_TYPE tType;
-    QHttp httpEnc;
 
     QSettings *prop;
     char dataDir[1024];

@@ -141,11 +141,11 @@ Translator *TranslatorManager::getTestDictionaryObject(const int index, const in
                 isDataOk = isDataOk && tr->init(tr->BG_EN, string(string(dataDir) + prop->getString("data")).c_str());
         } else {
                 cerr << "TranslatorManager::getTestDictionaryObject - Wrong description file: " << testDictionaries[index].file << "\n";
-                return false;
+                return NULL;
         }
         if (!isDataOk) {
                 cerr << "TranslatorManager::getTestDictionaryObject - Problem initialazing dictionary: " << testDictionaries[index].file << "\n";
-                return false;
+                return NULL;
         }
         char c[16];
         sprintf(c, "%d", level);

@@ -35,6 +35,7 @@ VERSION = "2.1"
 
 #QT += webkit
 QT += network
+QT += widgets
 TARGET = kbgoffice
 TEMPLATE = app
 

@@ -211,7 +211,7 @@ MainWindow::MainWindow(QSettings *pProp, QString sDataDir, QWidget *parent) :
     advSrchEnterSearch = prop->value(OPTION_ADV_SRCH_ASD_ENTER, DEFAULT_ADV_SRCH_ASD_ENTER).toBool();
     advSrchDoNotReplacePhrase = prop->value(OPTION_ADV_SRCH_ASD_DO_NOT_REPL, DEFAULT_ADV_SRCH_ASD_DO_NOT_REPL).toBool();
     if(!systemClipboard->supportsSelection())
-        advancedClipboard = FALSE;
+        advancedClipboard = false;
 
     browserName = prop->value(OPTION_DEFAULT_BROWSER, DEFAULT_BROWSER_NAME).toString();
     useExternalBrowser = prop->value(OPTION_USE_EXTERNAL_BROWSER, DEFAULT_USE_EXTERNAL_BROWSER).toBool();
@@ -385,8 +385,7 @@ MainWindow::MainWindow(QSettings *pProp, QString sDataDir, QWidget *parent) :
 //        connect(systemClipboard, SIGNAL(selectionChanged()), this, SLOT(slotSelectionChanged()));
 // Signal selectionChanged() won't be emited for preselected word on [alt-tab] ctrl-C
 
-    httpEnc.setHost("www.infoplease.com");
-    connect(&httpEnc, SIGNAL(done(bool)), this, SLOT(slotSearchInfoDone(bool)));
+
     createLanguageMenu();
     //ui->retranslateUi(this); // changeEvent takes care
 }
@@ -731,9 +730,6 @@ void MainWindow::Translations(TRANSLATIONS_TYPE tType) {
         return;
     }
 
-    if (!qUrl.host().isEmpty())
-        httpEnc.setHost(qUrl.host());
-
     // Google: Those formats works only in browser (or must implement some proto parsers)
     //   "http://translate.google.com/#auto|bg|$$$" "http://translate.google.com/translate_t#auto|bg|$$$" etc.
 
@@ -744,13 +740,6 @@ void MainWindow::Translations(TRANSLATIONS_TYPE tType) {
         if(strLink.contains("wiktionary.org/"))
             strLink.replace("%20", QLatin1String("_"));
 
-    // some ..e.g. Wiktionary want user-agent or simply wont work.
-    QHttpRequestHeader header = QHttpRequestHeader("GET", strLink, 1, 1);
-    header.setValue("Host", qUrl.host());
-    header.setValue("User-Agent", "Mozilla/5.0");
-    header.setValue("Connection", "Close");
-
-    httpEnc.request(header); // httpEnc.get(strLink);
     ui->result->setPlainText(tr("Translating, please wait..."));
     ui->statusBar->showMessage(tr("Translating, please wait..."), 3000);
 }
@@ -892,10 +881,7 @@ void MainWindow::on_actionSearch_in_Dic_tionary_triggered()
     QUrl::toPercentEncoding(qTmp);
     qstrTmp += qTmp;
     QUrl qUrl(qstrTmp);
-    if (!qUrl.host().isEmpty())
-            httpEnc.setHost(qUrl.host());
 
-    httpEnc.get( qstrTmp );
     ui->result->setPlainText(tr("Searching, please wait..."));
     ui->statusBar->showMessage(tr("Searching, please wait..."), 3000);
 }
@@ -909,10 +895,7 @@ void MainWindow::on_actionSearch_in_Encyclopedia_triggered()
     QUrl::toPercentEncoding(qTmp);
     qstrTmp += qTmp;
     QUrl qUrl(qstrTmp);
-    if (!qUrl.host().isEmpty())
-            httpEnc.setHost(qUrl.host());
 
-    httpEnc.get(qstrTmp);
     ui->result->setPlainText(tr("Searching, please wait..."));
     ui->statusBar->showMessage(tr("Searching, please wait..."), 3000);
 }
@@ -926,10 +909,7 @@ void MainWindow::on_actionSearch_in_A_ll_triggered()
     QUrl::toPercentEncoding(qTmp);
     qstrTmp += qTmp;
     QUrl qUrl(qstrTmp);
-    if (!qUrl.host().isEmpty())
-            httpEnc.setHost(qUrl.host());
 
-    httpEnc.get(qstrTmp);
     ui->result->setPlainText(tr("Searching, please wait..."));
     ui->statusBar->showMessage(tr("Searching, please wait..."), 3000);
 }
@@ -1295,7 +1275,7 @@ void MainWindow::launchExternalBrowser(QString qstrFileName)
      QStringList arguments;
      arguments << qstrFileName;
 
-    bool bSuccess = FALSE;
+    bool bSuccess = false;
     QProcess qBrowser(this);
     bSuccess = qBrowser.startDetached(browserName, arguments);
 
@@ -1311,9 +1291,9 @@ void MainWindow::launchExternalBrowser(QString qstrFileName)
 void MainWindow::slotSearchInfoDone(bool bError)
 {
     if (bError)
-        QMessageBox::critical(this, this->windowTitle(), tr("Search failed. Reason:") + httpEnc.errorString());
+        QMessageBox::critical(this, this->windowTitle(), tr("Search failed. Reason:"));
     else {
-        QByteArray qbtArr = httpEnc.readAll();
+        QByteArray qbtArr = NULL;
         if(qbtArr.isEmpty()) return; // probably setHost() fired
 
 // If s.th. doesn't show as expected in QTextBrowser or browser use redirect (to real url) workaround below
@@ -1362,11 +1342,8 @@ void MainWindow::on_result_anchorClicked(QUrl qUrl)
             QMessageBox::critical(this, this->windowTitle(), tr("Invalid URL.\n") + qUrl.toString());
             return;
     }
-    if (!qUrl.host().isEmpty())
-            httpEnc.setHost(qUrl.host());
 
     strLink="";
-    httpEnc.get(qUrl.toString());
     ui->result->setPlainText(tr("Loading data, please wait..."));
     ui->statusBar->showMessage(tr("Loading data, please wait..."), 3000);
 }
@@ -1485,11 +1462,11 @@ void MainWindow::slotWatchClipboardOptionChanged()
     QAction  *wca = qobject_cast<QAction*>(sender());
     Q_CHECK_PTR(wca);
     if (wca->isChecked()) {
-        watchClipboard = TRUE;
+        watchClipboard = true;
         //advancedClipboard = ?;
     } else {
-        watchClipboard = FALSE;
-        //advancedClipboard = FALSE;
+        watchClipboard = false;
+        //advancedClipboard = false;
     }
 }
 
@@ -1522,14 +1499,14 @@ void MainWindow::on_action_Configure_triggered()
     odui.act->setChecked(watchClipboard);
     odui.aact->setChecked(advancedClipboard);
     if (!odui.act->isChecked())
-        odui.aact->setEnabled(FALSE);
+        odui.aact->setEnabled(false);
     odui.uss->setChecked(useSplashScreen);
     odui.ist->setChecked(sysTrayIcon);
     odui.chs->setChecked(closeToSysTray);
     odui.mhs->setChecked(minimizeToSysTray);
     if (!odui.ist->isChecked()){
-        odui.chs->setEnabled(FALSE);
-        odui.mhs->setEnabled(FALSE);
+        odui.chs->setEnabled(false);
+        odui.mhs->setEnabled(false);
     }
 
     //odui.subLayout->setSpacing(SPACE_IN_DIALOGS);
@@ -1718,7 +1695,7 @@ void MainWindow::on_action_Configure_triggered()
         }
 
         if(!systemClipboard->supportsSelection())
-            advancedClipboard = FALSE;
+            advancedClipboard = false;
 
         prop->sync();
 

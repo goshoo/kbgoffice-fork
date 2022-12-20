@@ -1,14 +1,14 @@
 #include "application.h"
 //#include <QtGui/QApplication>
 
-#include <QtGui/QSystemTrayIcon>
-#include <QDesktopWidget>
+#include <QtWidgets/QSystemTrayIcon>
+#include <QtWidgets/QDesktopWidget>
 #include <QDir>
 #include <QFileInfo>
 #include <QLocale>
-#include <QMessageBox>
+#include <QtWidgets/QMessageBox>
 #include <QSharedMemory>
-#include <QSplashScreen>
+#include <QtWidgets/QSplashScreen>
 #include <QTranslator>
 #include <QTextCodec>
 #include <QTime>
